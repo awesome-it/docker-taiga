@@ -1,5 +1,6 @@
 FROM python:3.5
 MAINTAINER Benjamin Hutchins <ben@hutchins.co>
+ARG VERSION
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -23,8 +24,17 @@ RUN set -x; \
 
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
-COPY taiga-back /usr/src/taiga-back
-COPY taiga-front-dist/ /usr/src/taiga-front-dist
+# Get taiga-back and taige-front directly from Git
+RUN wget https://github.com/taigaio/taiga-back/archive/$VERSION.tar.gz -O /taiga-back.tar.gz && \
+    tar -xzf /taiga-back.tar.gz && \
+    ln -s /taiga-back-$VERSION /usr/src/taiga-back && \
+    rm /taiga-back.tar.gz
+
+RUN wget https://github.com/taigaio/taiga-front-dist/archive/${VERSION}-stable.tar.gz -O /taiga-front-dist.tar.gz && \
+    tar -xzf /taiga-front-dist.tar.gz && \
+    ln -s /taiga-front-dist-${VERSION}-stable /usr/src/taiga-front-dist && \
+    rm /taiga-front-dist.tar.gz
+
 COPY docker-settings.py /usr/src/taiga-back/settings/docker.py
 COPY conf/locale.gen /etc/locale.gen
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
