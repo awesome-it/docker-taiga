@@ -22,14 +22,17 @@ RUN set -x; \
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
 # Get taiga-back and taige-front directly from Git
-RUN wget https://github.com/taigaio/taiga-back/archive/$VERSION.tar.gz -O /taiga-back.tar.gz && \
+RUN VERSION_BACK=${VERSION:-stable} && \
+    wget https://github.com/taigaio/taiga-back/archive/$VERSION_BACK.tar.gz -O /taiga-back.tar.gz && \
     tar -xzf /taiga-back.tar.gz && \
-    ln -s /taiga-back-$VERSION /usr/src/taiga-back && \
+    ln -s /taiga-back-$VERSION_BACK /usr/src/taiga-back && \
     rm /taiga-back.tar.gz
 
-RUN wget https://github.com/taigaio/taiga-front-dist/archive/${VERSION}-stable.tar.gz -O /taiga-front-dist.tar.gz && \
+RUN VERSION_FRONT=${VERSION:-stable} && \
+    if [ $VERSION_FRONT != "stable" ] ; then VERSION_FRONT=${VERSION_FRONT}-stable ; fi && \
+    wget https://github.com/taigaio/taiga-front-dist/archive/$VERSION_FRONT.tar.gz -O /taiga-front-dist.tar.gz && \
     tar -xzf /taiga-front-dist.tar.gz && \
-    ln -s /taiga-front-dist-${VERSION}-stable /usr/src/taiga-front-dist && \
+    ln -s /taiga-front-dist-$VERSION_FRONT /usr/src/taiga-front-dist && \
     rm /taiga-front-dist.tar.gz
 
 COPY docker-settings.py /usr/src/taiga-back/settings/docker.py
