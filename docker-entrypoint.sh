@@ -32,14 +32,6 @@ fi
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
 sed -i "s/TAIGA_HOSTNAME/$TAIGA_HOSTNAME/g" /taiga/conf.json
 
-# Enable Taiga Events in k8s environments
-if [[ ! -z "$TAIGA_ENABLE_EVENTS_K8S" ]] ; then
-    export RABBIT_PORT_5672_TCP_ADDR="127.0.0.1"
-    # Change NGINX port to another port than 80 since
-    # this is the default port for benhutchins/taiga-events
-    sed -s "s/listen 80 default_server;/listen 81 default_server;/" -i /etc/nginx/conf.d/default.conf
-fi
-
 # Look to see if we should set the "eventsUrl"
 if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
   echo "Enabling Taiga Events"
