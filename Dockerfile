@@ -4,9 +4,6 @@ ARG VERSION
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN curl -L http://nginx.org/keys/nginx_signing.key | apt-key add -
-RUN echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list
-
 RUN set -x; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
