@@ -4,9 +4,6 @@ ARG VERSION
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# Version of Nginx to install
-ENV NGINX_VERSION 1.9.15-1~jessie
-
 RUN curl -L http://nginx.org/keys/nginx_signing.key | apt-key add -
 RUN echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list
 
@@ -16,7 +13,7 @@ RUN set -x; \
         locales \
         gettext \
         ca-certificates \
-        nginx=${NGINX_VERSION} \
+        nginx \
     && rm -rf /var/lib/apt/lists/*
 
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
