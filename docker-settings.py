@@ -29,8 +29,8 @@ if os.getenv('TAIGA_SSL') and os.getenv('TAIGA_SSL').lower() == 'true' or \
     STATIC_URL = 'https://' + TAIGA_HOSTNAME + '/static/'
 
 SECRET_KEY = os.getenv('TAIGA_SECRET_KEY')
-
-if os.getenv('TAIGA_ENABLE_EVENTS').lower() == 'true':
+TAIGA_ENABLE_EVENTS = os.getenv('TAIGA_ENABLE_EVENTS')
+if TAIGA_ENABLE_EVENTS and TAIGA_ENABLE_EVENTS.lower() == 'true':
     from .celery import *
 
     CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
