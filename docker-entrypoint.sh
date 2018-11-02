@@ -33,7 +33,7 @@ fi
 sed -i "s/TAIGA_HOSTNAME/$TAIGA_HOSTNAME/g" /taiga/conf.json
 
 # Look to see if we should set the "eventsUrl"
-if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+if [ ! -z "$TAIGA_ENABLE_EVENTS" ]; then
   echo "Enabling Taiga Events"
   sed -i "s/eventsUrl\": null/eventsUrl\": \"ws:\/\/$TAIGA_HOSTNAME\/events\"/g" /taiga/conf.json
   mv /etc/nginx/taiga-events.conf /etc/nginx/conf.d/default.conf
