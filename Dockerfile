@@ -41,7 +41,7 @@ RUN mkdir -p /taiga
 COPY conf/taiga/local.py /taiga/local.py
 COPY conf/taiga/celery.py /taiga/celery.py
 COPY conf/taiga/conf.json /taiga/conf.json
-RUN rm /usr/src/taiga-back/settings/conf.py && \
+RUN rm /usr/src/taiga-back/settings/celery.py ; \
     ln -s /taiga/celery.py /usr/src/taiga-back/settings/celery.py && \
     ln -s /taiga/local.py /usr/src/taiga-back/settings/local.py && \
     ln -s /taiga/conf.json /usr/src/taiga-front-dist/dist/conf.json
