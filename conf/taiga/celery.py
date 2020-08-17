@@ -19,7 +19,7 @@
 from kombu import Queue
 import os
 
-broker_url = 'amqp://' + os.getenv('TAIGA_RABBITMQ_USER', 'taiga') +  ':' + os.getenv('TAIGA_RABBITMQ_PASS', 'taiga') + '@' + os.getenv('TAIGA_RABBITMQ_HOST', 'rabbitmq') + ':' + os.getenv('TAIGA_RABBITMQ_PORT', '5672') + '/' + os.getenv('TAIGA_RABBITMQ_VHOST', 'taiga') + '/'
+broker_url = 'amqp://' + os.getenv('TAIGA_RABBITMQ_USER', 'taiga') +  ':' + os.getenv('TAIGA_RABBITMQ_PASS', 'taiga') + '@' + os.getenv('TAIGA_RABBITMQ_HOST', 'rabbitmq') + ':' + os.getenv('TAIGA_RABBITMQ_PORT', '5672') + '/' + os.getenv('TAIGA_RABBITMQ_VHOST', 'taiga')
 result_backend = 'redis://' + os.getenv('TAIGA_REDIS_HOST', 'redis') +  ':' + os.getenv('TAIGA_REDIS_PORT', '6379') + '/0'
 
 accept_content = ['pickle',] # Values are 'pickle', 'json', 'msgpack' and 'yaml'
